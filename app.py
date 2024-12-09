@@ -2,7 +2,7 @@ import streamlit as st
 import os
 import tempfile
 import subprocess
-from openai import OpenAI
+import openai
 from transformers import pipeline
 
 def get_openai_client(api_key):
