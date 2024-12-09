@@ -5,8 +5,8 @@ import subprocess
 import openai
 from transformers import pipeline
 
-def get_openai_client(api_key):
-    return OpenAI(api_key=api_key)
+def set_openai_api_key(api_key):
+    openai.api_key = api_key
 
 @st.cache_resource
 def load_translation_model(source_lang, target_lang):
@@ -34,9 +34,9 @@ def extract_audio_to_mp3(video_file):
         raise RuntimeError(f"Unexpected error: {e}")
 
 def generate_subtitles(audio_path, api_key):
-    openai_client = get_openai_client(api_key)
+    set_openai_api_key(api_key)
     with open(audio_path, "rb") as f:
-        transcript = openai_client.audio.transcriptions.create(
+        transcript = openai.Audio.transcribe(
             file=f,
             model="whisper-1",
             response_format="srt"
